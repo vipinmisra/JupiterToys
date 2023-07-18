@@ -5,6 +5,7 @@ import io.cucumber.java.en.*;
 import nz.co.planit.pages.ContactPage;
 import nz.co.planit.pages.HomePage;
 import nz.co.planit.lib.Hooks;
+import org.junit.Assert;
 
 import java.util.Map;
 
@@ -27,7 +28,7 @@ public class ContactSteps {
     }
 
     @When("I submit the form with the following values")
-    public void i_submit_the_form_with_the_following_values(DataTable dataTable) {
+    public void submitFormData(DataTable dataTable) {
         Map<String, String> formData = dataTable.asMap(String.class, String.class);
 
         contactPage = new ContactPage();
@@ -36,12 +37,22 @@ public class ContactSteps {
     }
 
     @Then("I should get the following error messages")
-    public void i_should_get_the_following_error_messages(DataTable dataTable) {
+    public void validateErrorMessages(DataTable dataTable) {
+        Map<String, String> expectedErrorMessages = dataTable.asMap(String.class, String.class);
+
+        Map<String, String> actualErrorMessages = contactPage.getErrorMessages();
+
+        for (String error : expectedErrorMessages.keySet()){
+            Assert.assertEquals("Expected " + error + " error message to be " +
+                            expectedErrorMessages.get(error) +
+                            " but got " + actualErrorMessages.get(error),
+                    expectedErrorMessages.get(error), actualErrorMessages.get(error));
+        }
 
     }
 
     @Then("I should not get any error messages")
-    public void i_should_not_get_any_error_messages() {
+    public void validateForNoErrorMessages() {
 
     }
 

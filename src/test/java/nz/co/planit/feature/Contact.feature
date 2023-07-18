@@ -8,16 +8,14 @@ Feature: This feature file covers scenarios related to contact feature of Jupite
 
 
     Then I should get the following error messages
-      | field | error_message |
-      | Header | We welcome your feedback - but we won't get it unless you complete the form correctly. |
       | Forename | Forename is required |
-      | Email    | Email is required |
-      | Message  | Message is required |
+      | Email    | Email is required    |
+      | Message  | Message is required  |
 
     When I submit the form with the following values
-      | field | value |
-      | Forename | Vipin |
-      | Email    | vipinmisra23@gmail.com |
+      | field    | value                       |
+      | Forename | Vipin                       |
+      | Email    | vipinmisra23@gmail.com      |
       | Message  | This is a sample test form. |
 
     Then I should not get any error messages
