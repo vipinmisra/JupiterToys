@@ -14,16 +14,17 @@ public class ContactSteps {
 
     HomePage homePage;
     ContactPage contactPage;
+    String foreName = "";
 
 
     @Given("I am on the Jupiter Toys home page")
-    public void i_am_on_the_jupiter_toys_home_page() {
+    public void navigateToHomepage() {
         homePage = new HomePage();
     }
 
 
     @Given("^I navigate to (.*) page$")
-    public void i_navigate_to_contact_page(String menu) {
+    public void navigateToAnotherPage(String menu) {
         homePage.selectMenuItem(menu);
     }
 
@@ -34,6 +35,9 @@ public class ContactSteps {
         contactPage = new ContactPage();
         contactPage.submitForm(formData);
 
+        // store the forename to use it for validation in the later step
+        if (formData.containsKey("Forename"))
+            foreName = formData.get("Forename");
     }
 
     @Then("I should get the following error messages")
@@ -54,6 +58,20 @@ public class ContactSteps {
     @Then("I should not get any error messages")
     public void validateForNoErrorMessages() {
 
+        Assert.assertFalse(contactPage.doesErrorMessageExist("Forename"));
+        Assert.assertFalse(contactPage.doesErrorMessageExist("Email"));
+        Assert.assertFalse(contactPage.doesErrorMessageExist("Message"));
     }
 
+    @Then("^I should see the successful submission message like (.*)$")
+    public void validateSuccessfulSubmissionMessage(String expectedMessage){
+        // replace <forname> placeholder in message with actual Forename
+        expectedMessage = expectedMessage.replace("<forename>", foreName);
+
+        String actualMessage = contactPage.getSuccessMessage();
+
+        Assert.assertEquals("Expected success message to be " +
+                        expectedMessage + " , but got " + actualMessage,
+                        expectedMessage, actualMessage);
+    }
 }

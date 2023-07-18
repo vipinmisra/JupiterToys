@@ -1,14 +1,15 @@
 package nz.co.planit.pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+
 
 import java.util.HashMap;
 import java.util.Map;
 
 import static nz.co.planit.lib.Hooks.driver;
+import static framework.lib.HelperMethods.*;
 
 public class ContactPage extends Header{
 
@@ -30,9 +31,17 @@ public class ContactPage extends Header{
     @FindBy(linkText = "Submit")
     WebElement submitButton;
 
+    @FindBy(xpath = "//div[contains(@class, 'alert-success')]")
+    WebElement successMessageLabel;
+    @FindBy(linkText = "« Back")
+    WebElement backButton;
 
     public ContactPage(){
         PageFactory.initElements(driver, this);
+        // There is a bug in the application; we need to refresh the contact page else cannot act on objects
+        sleep(1);
+         driver.navigate().refresh();
+        waitForElement(forenameTextBox, 10);
     }
 
     public void submitForm(Map<String, String> formData){
@@ -68,5 +77,39 @@ public class ContactPage extends Header{
         }
         catch (Exception e){}
         return errorMessages;
+    }
+
+    public boolean doesErrorMessageExist(String field){
+        boolean exists = false;
+
+        // wait fo the back button
+        waitForElement(backButton, 30);
+
+        int trials = 0;
+        while(trials < 2) {
+            try {
+                switch (field.toLowerCase()) {
+                    case "forename":
+                        forenameErrorMessageLabel.getText();
+                        break;
+                    case "email":
+                        emailErrorMessageLabel.getText();
+                        break;
+                    case "message":
+                        messageErrorMessageLabel.getText();
+                        break;
+                }
+                exists = true;
+                break;
+            } catch (Exception e) {}
+            trials++;
+            sleep(1);
+        }
+        return exists;
+    }
+
+    public String getSuccessMessage(){
+        waitForElement(successMessageLabel, 10);
+        return successMessageLabel.getText();
     }
 }
