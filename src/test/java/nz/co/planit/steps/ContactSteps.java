@@ -4,7 +4,6 @@ import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.*;
 import nz.co.planit.pages.ContactPage;
 import nz.co.planit.pages.HomePage;
-import nz.co.planit.lib.Hooks;
 import org.junit.Assert;
 
 import java.util.Map;

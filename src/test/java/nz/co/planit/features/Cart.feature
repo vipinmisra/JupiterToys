@@ -1,4 +1,4 @@
-@Cart
+@Web @Cart
 Feature: This feature file covers scenarios related to cart functionality of Jupiter Toys application
 
   @Testcase_3

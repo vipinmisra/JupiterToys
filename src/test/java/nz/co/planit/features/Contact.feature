@@ -1,4 +1,4 @@
-@Contact
+@Web @Contact
 Feature: This feature file covers scenarios related to contact functionality of Jupiter Toys application
 
   @Testcase_1

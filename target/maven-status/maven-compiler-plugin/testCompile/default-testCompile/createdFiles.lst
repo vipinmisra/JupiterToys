@@ -1,8 +1,9 @@
 nz\co\planit\steps\CartSteps.class
+nz\co\planit\steps\Hooks.class
 nz\co\planit\pages\ShopPage.class
 nz\co\planit\pages\Header.class
 nz\co\planit\steps\ContactSteps.class
 nz\co\planit\pages\CartPage.class
 nz\co\planit\pages\HomePage.class
+nz\co\planit\steps\TestRunner.class
 nz\co\planit\pages\ContactPage.class
-nz\co\planit\lib\Hooks.class

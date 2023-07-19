@@ -1,5 +1,5 @@
 package nz.co.planit.pages;
-import static nz.co.planit.lib.Hooks.*;
+import static nz.co.planit.steps.Hooks.*;
 
 public class HomePage extends Header{
 

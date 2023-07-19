@@ -2,9 +2,7 @@ package nz.co.planit.pages;
 
 import org.openqa.selenium.By;
 
-import static framework.lib.HelperMethods.sleep;
-
-import static nz.co.planit.lib.Hooks.driver;
+import static nz.co.planit.steps.Hooks.driver;
 
 public abstract class Header {
 

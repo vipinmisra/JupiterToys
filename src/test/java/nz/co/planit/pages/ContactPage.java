@@ -8,7 +8,7 @@ import org.openqa.selenium.support.PageFactory;
 import java.util.HashMap;
 import java.util.Map;
 
-import static nz.co.planit.lib.Hooks.driver;
+import static nz.co.planit.steps.Hooks.driver;
 import static framework.lib.HelperMethods.*;
 
 public class ContactPage extends Header {
