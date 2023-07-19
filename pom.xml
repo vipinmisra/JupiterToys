@@ -50,6 +50,53 @@
             <artifactId>selenium-chrome-driver</artifactId>
             <version>4.10.0</version>
         </dependency>
+        <dependency>
+            <groupId>net.masterthought</groupId>
+            <artifactId>cucumber-reporting</artifactId>
+            <version>5.7.5</version>
+        </dependency>
+
     </dependencies>
+    <build>
+    <plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <configuration>
+                <source>8</source>
+                <target>8</target>
+            </configuration>
+        </plugin>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>3.0.0-M3</version>
+            <configuration>
+                <forkCount>${forks}</forkCount>
+                <reuseForks>true</reuseForks>
+                <useSystemClassLoader>false</useSystemClassLoader>
+                <!--                    <testFailureIgnore>true</testFailureIgnore>-->
+            </configuration>
+        </plugin>
+        <plugin>
+            <groupId>com.trivago.rta</groupId>
+            <artifactId>cluecumber-report-plugin</artifactId>
+            <version>2.9.4</version>
+            <executions>
+                <execution>
+                    <id>report</id>
+                    <phase>post-integration-test</phase>
+                    <goals>
+                        <goal>reporting</goal>
+                    </goals>
+                </execution>
+            </executions>
+            <configuration>
+                <sourceJsonReportDirectory>target/cucumber.json</sourceJsonReportDirectory>
+                <generatedHtmlReportDirectory>target/cucumberHTML/1</generatedHtmlReportDirectory>
+            </configuration>
+        </plugin>
+    </plugins>
+    </build>
 
 </project>

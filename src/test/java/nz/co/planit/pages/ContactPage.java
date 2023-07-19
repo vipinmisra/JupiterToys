@@ -11,7 +11,7 @@ import java.util.Map;
 import static nz.co.planit.lib.Hooks.driver;
 import static framework.lib.HelperMethods.*;
 
-public class ContactPage extends Header{
+public class ContactPage extends Header {
 
 
     @FindBy(id = "forename")
@@ -36,17 +36,17 @@ public class ContactPage extends Header{
     @FindBy(linkText = "« Back")
     WebElement backButton;
 
-    public ContactPage(){
+    public ContactPage() {
         PageFactory.initElements(driver, this);
         // There is a bug in the application; we need to refresh the contact page else cannot act on objects
         sleep(1);
-         driver.navigate().refresh();
+        driver.navigate().refresh();
         waitForElement(forenameTextBox, 10);
     }
 
-    public void submitForm(Map<String, String> formData){
-        for(String field : formData.keySet()){
-            switch (field){
+    public void submitForm(Map<String, String> formData) {
+        for (String field : formData.keySet()) {
+            switch (field) {
                 case "Forename":
                     forenameTextBox.sendKeys(formData.get(field));
                     break;
@@ -62,54 +62,50 @@ public class ContactPage extends Header{
         submitButton.click();
     }
 
-    public Map<String, String> getErrorMessages(){
+    public Map<String, String> getErrorMessages() {
         Map<String, String> errorMessages = new HashMap<>();
         try {
             errorMessages.put("Forename", forenameErrorMessageLabel.getText());
+        } catch (Exception e) {
         }
-        catch (Exception e){}
         try {
             errorMessages.put("Email", emailErrorMessageLabel.getText());
+        } catch (Exception e) {
         }
-        catch (Exception e){}
         try {
             errorMessages.put("Message", messageErrorMessageLabel.getText());
+        } catch (Exception e) {
         }
-        catch (Exception e){}
         return errorMessages;
     }
 
-    public boolean doesErrorMessageExist(String field){
+    public boolean doesErrorMessageExist(String field) {
         boolean exists = false;
 
-        // wait fo the back button
-        waitForElement(backButton, 30);
+        // wait for the back button
+        waitForElement(backButton, 60);
 
-        int trials = 0;
-        while(trials < 2) {
-            try {
-                switch (field.toLowerCase()) {
-                    case "forename":
-                        forenameErrorMessageLabel.getText();
-                        break;
-                    case "email":
-                        emailErrorMessageLabel.getText();
-                        break;
-                    case "message":
-                        messageErrorMessageLabel.getText();
-                        break;
-                }
-                exists = true;
-                break;
-            } catch (Exception e) {}
-            trials++;
-            sleep(1);
+        try {
+            switch (field.toLowerCase()) {
+                case "forename":
+                    forenameErrorMessageLabel.getText();
+                    break;
+                case "email":
+                    emailErrorMessageLabel.getText();
+                    break;
+                case "message":
+                    messageErrorMessageLabel.getText();
+                    break;
+            }
+            exists = true;
+        } catch (Exception e) {
         }
+
         return exists;
     }
 
-    public String getSuccessMessage(){
-        waitForElement(successMessageLabel, 10);
+    public String getSuccessMessage() {
+        waitForElement(successMessageLabel, 60);
         return successMessageLabel.getText();
     }
 }

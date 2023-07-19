@@ -11,11 +11,9 @@ import java.util.Map;
 
 public class ContactSteps {
 
-
     HomePage homePage;
     ContactPage contactPage;
     String foreName = "";
-
 
     @Given("I am on the Jupiter Toys home page")
     public void navigateToHomepage() {

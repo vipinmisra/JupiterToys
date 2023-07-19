@@ -27,17 +27,27 @@ public class CartSteps {
 
     @Then ("I validate the price displayed per product")
     public void validatePricePerProduct(){
+        cartPage = new CartPage();
+
+        Map<String, String> actualPricePerProduct = cartPage.getPricePerProduct();
+
         for (String product : productDetails.keySet()){
-            System.out.println(product);
-            System.out.println("--------");
-            System.out.println(productDetails.get(product).get(0));
-            System.out.println(productDetails.get(product).get(1));
-            System.out.println();
+            Assert.assertEquals("The price value for " + product + " product do not match.",
+                    "$" + productDetails.get(product).get(0), actualPricePerProduct.get(product));
         }
     }
     @Then("I validate the subtotal per product")
     public void validateSubtotalPerProduct(){
+        Map<String, String> actualSubtotalPerProduct = cartPage.getSubtotalPerProduct();
 
+        float expectedSubtotal = 0f;
+        DecimalFormat df = new DecimalFormat("0.00");
+
+        for (String product : productDetails.keySet()){
+            expectedSubtotal = (Float) productDetails.get(product).get(0) * Integer.parseInt(String.valueOf(productDetails.get(product).get(1)));
+            Assert.assertEquals("The subtotal value for " + product + " product do not match.",
+                    "$" + df.format(expectedSubtotal), actualSubtotalPerProduct.get(product));
+        }
     }
 
     @Then("I validate the total amount ot be paid")
@@ -45,18 +55,10 @@ public class CartSteps {
         float expectedTotal = 0f;
         DecimalFormat df = new DecimalFormat("0.0");
 
-        for (String product : productDetails.keySet()){
-
+        for (String product : productDetails.keySet())
             expectedTotal += (Float) productDetails.get(product).get(0) * Integer.parseInt(String.valueOf(productDetails.get(product).get(1)));
-        }
 
-
-        CartPage cartPage = new CartPage();
         String actualTotal = cartPage.getTotalValue();
-
-        System.out.println("Expected total " + df.format(expectedTotal));
-        System.out.println("Actual total " + actualTotal);
-
-        Assert.assertEquals(df.format(expectedTotal), actualTotal);
+        Assert.assertEquals("The total amount on the Cart screen is not as expected", df.format(expectedTotal), actualTotal);
     }
 }

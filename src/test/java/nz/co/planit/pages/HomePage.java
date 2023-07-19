@@ -1,5 +1,5 @@
 package nz.co.planit.pages;
-import static nz.co.planit.lib.Hooks.driver;
+import static nz.co.planit.lib.Hooks.*;
 
 public class HomePage extends Header{
 
@@ -8,6 +8,6 @@ public class HomePage extends Header{
     }
 
     public void navigate(){
-        driver.get("https://jupiter.cloud.planittesting.com/");
+        driver.get(properties.getProperty("URL"));
     }
 }
