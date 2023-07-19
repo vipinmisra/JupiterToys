@@ -3,26 +3,27 @@ This repository contains the test automation code to test the Jupiter Toys web a
 
 ## About Project:-
 Jupiter Toys UI Test: This code repository contains code that automates the following test cases.
-Test case 1:
-	1. From the home page go to contact page
-	2. Click submit button
-	3. Verify error messages
-	4. Populate mandatory fields
-	5. Validate errors are gone
 
-Test case 2:
-	1. From the home page go to contact page
-	2. Populate mandatory fields
-	3. Click submit button
-	4. Validate successful submission message
-	Note: Run this test 5 times to ensure 100% pass rate
+**Test case 1:**
+1. From the home page, go to the contact page.
+2. Click the submit button.
+3. Verify error messages.
+4. Populate mandatory fields.
+5. Validate errors are gone.
 
-Test case 3:
-	1.	Buy 2 Stuffed Frog,5 Fluffy Bunny, 3 Valentine Bear
-	2.	Go to the cart page
-	3.	Verify the subtotal for each product is correct
-	4.	Verify the price for each product
-	5.	Verify that total = sum(sub totals)
+**Test case 2:**
+1. From the home page go to contact page
+2. Populate mandatory fields
+3. Click submit button
+4. Validate successful submission message
+Note: Run this test 5 times to ensure 100% pass rate
+
+**Test case 3:**
+1. Buy 2 Stuffed Frog,5 Fluffy Bunny, 3 Valentine Bear
+2. Go to the cart page
+3. Verify the subtotal for each product is correct
+4. Verify the price for each product
+5. Verify that total = sum(sub totals)
 
 
 ## Code Structure:-
@@ -55,22 +56,21 @@ Open a command-prompt and navigate to project directory where you would find the
 Here are the commands to run the test cases:
 
 1. To run all the test cases:
-'''
+```
 	mvn clean test
-'''
+```	
 
-2. To run the tests using a specific tag: 
+3. To run the tests using a specific tag: 
 If we wish to run just the Cart feature test cases, we can specify the tag as follows:
-'''
+```
 	mvn verify -Dcucumber.filter.tags="@Cart"
-'''
+```
 
-3. To run the tests using multiple tags: 
+4. To run the tests using multiple tags: 
 If we wish to run the tests that match either tag @Contact and tag @Testcase_1, use the following command: 
-'''
+```
 	mvn verify -Dcucumber.filter.tags="@Cart or @Testcase_1"
-'''
-
+```
 
 ## Test Results:-
 Execution reports are generated under ./target directory under project directory.
