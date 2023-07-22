@@ -5,14 +5,14 @@ Feature: This feature file covers scenarios related to contact functionality of 
   Scenario: [Testcase_1]: Validate error messages for Mandatory fields
     Given I am on the Jupiter Toys home page
     And I navigate to Contact page
-    When I submit the form with the following values
+    When I enter the following values into the form and submit
       | field | value |
 
     Then I should get the following error messages
       | Forename | Forename is required |
       | Email    | Email is required    |
       | Message  | Message is required  |
-    When I submit the form with the following values
+    When I enter the following values into the form and not submit
       | field    | value                       |
       | Forename | Vipin                       |
       | Email    | vipinmisra23@gmail.com      |
@@ -23,7 +23,7 @@ Feature: This feature file covers scenarios related to contact functionality of 
   Scenario Outline: [Testcase_2]: Validate successful submission messages on providing all mandatory field values
     Given I am on the Jupiter Toys home page
     And I navigate to Contact page
-    When I submit the form with the following values
+    When I enter the following values into the form and submit
       | field    | value                       |
       | Forename | Vipin                       |
       | Email    | vipinmisra23@gmail.com      |

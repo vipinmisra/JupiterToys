@@ -4,7 +4,7 @@ import java.io.FileInputStream;
 import java.util.Properties;
 
 public class PropertiesHandler {
-        public static Properties loadProperties(String path) {
+    public Properties loadProperties(String path) {
         Properties properties = new Properties();
         try {
             FileInputStream input = new FileInputStream(path);

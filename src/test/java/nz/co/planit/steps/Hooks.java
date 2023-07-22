@@ -5,8 +5,11 @@ import io.cucumber.java.Before;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import java.util.Locale;
 import java.util.Properties;
 import framework.lib.PropertiesHandler;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 
 
 public class Hooks {
@@ -16,12 +19,27 @@ public class Hooks {
 
     @Before
     public void step(){
-        // create a chrome driver object
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
+
+
 
         // read the properties
         properties = new PropertiesHandler().loadProperties("src/test/resources/global.properties");
+
+        // read from the property file the browse to run the tests on
+        String browser = properties.getProperty("BROWSER");
+
+        // create driver object based on the browser requested
+        switch (browser.toLowerCase()) {
+            case "chrome":
+                driver = new ChromeDriver();
+                break;
+            case "edge":
+                driver = new EdgeDriver();
+                break;
+            case "firefox":
+                driver = new FirefoxDriver();
+        }
+        driver.manage().window().maximize();
     }
 
 

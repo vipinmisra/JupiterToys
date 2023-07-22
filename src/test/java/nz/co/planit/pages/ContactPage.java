@@ -38,13 +38,10 @@ public class ContactPage extends Header {
 
     public ContactPage() {
         PageFactory.initElements(driver, this);
-        // There is a bug in the application; we need to refresh the contact page else cannot act on objects
-        sleep(1);
-        driver.navigate().refresh();
         waitForElement(forenameTextBox, 10);
     }
 
-    public void submitForm(Map<String, String> formData) {
+    public void enterFormData(Map<String, String> formData, boolean submitFormData) {
         for (String field : formData.keySet()) {
             switch (field) {
                 case "Forename":
@@ -58,50 +55,34 @@ public class ContactPage extends Header {
             }
         }
 
-        // click on submit button
-        submitButton.click();
+        // click on submit button if asked to
+        if(submitFormData)
+            submitButton.click();
     }
 
     public Map<String, String> getErrorMessages() {
         Map<String, String> errorMessages = new HashMap<>();
+        String foreName = "";
+        String email = "";
+        String message = "";
+
         try {
-            errorMessages.put("Forename", forenameErrorMessageLabel.getText());
-        } catch (Exception e) {
-        }
+            foreName = forenameErrorMessageLabel.getText();
+        } catch (Exception e) {}
+
         try {
-            errorMessages.put("Email", emailErrorMessageLabel.getText());
-        } catch (Exception e) {
-        }
+            email = emailErrorMessageLabel.getText();
+        } catch (Exception e) {}
+
         try {
-            errorMessages.put("Message", messageErrorMessageLabel.getText());
-        } catch (Exception e) {
-        }
+            message = messageErrorMessageLabel.getText();
+        } catch (Exception e) {}
+
+        errorMessages.put("Forename", foreName);
+        errorMessages.put("Email", email);
+        errorMessages.put("Message", message);
+
         return errorMessages;
-    }
-
-    public boolean doesErrorMessageExist(String field) {
-        boolean exists = false;
-
-        // wait for the back button
-        waitForElement(backButton, 60);
-
-        try {
-            switch (field.toLowerCase()) {
-                case "forename":
-                    forenameErrorMessageLabel.getText();
-                    break;
-                case "email":
-                    emailErrorMessageLabel.getText();
-                    break;
-                case "message":
-                    messageErrorMessageLabel.getText();
-                    break;
-            }
-            exists = true;
-        } catch (Exception e) {
-        }
-
-        return exists;
     }
 
     public String getSuccessMessage() {

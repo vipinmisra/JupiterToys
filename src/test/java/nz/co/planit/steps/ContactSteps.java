@@ -25,12 +25,15 @@ public class ContactSteps {
         homePage.selectMenuItem(menu);
     }
 
-    @When("I submit the form with the following values")
-    public void submitFormData(DataTable dataTable) {
+    @When("^I enter the following values into the form and (.*)$")
+    public void submitFormData(String submitForm, DataTable dataTable) {
         Map<String, String> formData = dataTable.asMap(String.class, String.class);
 
         contactPage = new ContactPage();
-        contactPage.submitForm(formData);
+        boolean submitFormData = false;
+        if (submitForm.equalsIgnoreCase("submit"))
+            submitFormData = true;
+        contactPage.enterFormData(formData, submitFormData);
 
         // store the forename to use it for validation in the later step
         if (formData.containsKey("Forename"))
@@ -54,10 +57,13 @@ public class ContactSteps {
 
     @Then("I should not get any error messages")
     public void validateForNoErrorMessages() {
+        Map<String, String> actualErrorMessages = contactPage.getErrorMessages();
 
-        Assert.assertFalse(contactPage.doesErrorMessageExist("Forename"));
-        Assert.assertFalse(contactPage.doesErrorMessageExist("Email"));
-        Assert.assertFalse(contactPage.doesErrorMessageExist("Message"));
+        for (String error : actualErrorMessages.keySet()){
+            Assert.assertEquals("Was not expecting error message for " + error + "field after entering value, but got "
+                    + actualErrorMessages.get(error),
+                    "", actualErrorMessages.get(error));
+        }
     }
 
     @Then("^I should see the successful submission message like (.*)$")
